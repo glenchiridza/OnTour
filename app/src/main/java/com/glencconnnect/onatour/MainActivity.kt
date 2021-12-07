@@ -42,4 +42,12 @@ class MainActivity : AppCompatActivity() {
         navigationView.setupWithNavController(navController)
 
     }
+
+    override fun onBackPressed() {
+        if(draweLayout.isOpen){
+            draweLayout.close()
+        }else {
+            super.onBackPressed()
+        }
+    }
 }
