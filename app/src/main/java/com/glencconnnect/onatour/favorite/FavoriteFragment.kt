@@ -1,11 +1,11 @@
-package com.sriyank.globotour.favorite
+package com.glencconnnect.onatour.favorite
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.sriyank.globotour.R
+import com.glencconnnect.onatour.R
 
 
 class FavoriteFragment : Fragment() {

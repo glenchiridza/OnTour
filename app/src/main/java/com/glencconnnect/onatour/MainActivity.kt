@@ -1,9 +1,10 @@
-package com.sriyank.globotour
+package com.glencconnnect.onatour
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.glencconnnect.onatour.R
 import com.google.android.material.appbar.MaterialToolbar
 
 
