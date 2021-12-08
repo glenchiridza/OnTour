@@ -39,16 +39,18 @@ class FavoriteFragment : Fragment() {
 
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = RecyclerView.VERTICAL
-        recyclerView?.layoutManager = layoutManager
+        recyclerView.layoutManager = layoutManager
+
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
     private val itemTouchHelper = ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(
-            ItemTouchHelper.UP or ItemTouchHelper.DOWN ,0){
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN ,ItemTouchHelper.RIGHT){
         override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, targetViewHolder: RecyclerView.ViewHolder): Boolean {
 
             //item dragged
             val fromPosition = viewHolder.adapterPosition
-            val toPosition = viewHolder.adapterPosition
+            val toPosition = targetViewHolder.adapterPosition
 
             Collections.swap(favoriteCityList, fromPosition,toPosition)
 
@@ -59,8 +61,19 @@ class FavoriteFragment : Fragment() {
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             ///item swiped
+            val position = viewHolder.adapterPosition
+            val deletedCity:City = favoriteCityList[position]
+
+            deleteItem(position)
+
         }
 
     })
+
+    private fun deleteItem(position: Int) {
+        favoriteCityList.removeAt(position)
+        favoriteAdapter.notifyItemRemoved(position)
+        favoriteAdapter.notifyItemRangeRemoved(position,favoriteCityList.size)
+    }
 
 }
