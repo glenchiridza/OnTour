@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.glencconnnect.onatour.R
 import com.glencconnnect.onatour.city.City
 import com.glencconnnect.onatour.city.VacationSpots
+import com.google.android.material.snackbar.Snackbar
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -31,10 +32,10 @@ class FavoriteFragment : Fragment() {
         val context = requireContext()
 
         favoriteCityList = VacationSpots.favoriteCityList as ArrayList<City>
-        val favAdapter = FavoriteAdapter(context, favoriteCityList)
+        favoriteAdapter = FavoriteAdapter(context, favoriteCityList)
 
         recyclerView = view?.findViewById(R.id.fav_recycler_view)!!
-        recyclerView?.adapter = favAdapter
+        recyclerView?.adapter = favoriteAdapter
         recyclerView?.setHasFixedSize(true)
 
         val layoutManager = LinearLayoutManager(context)
@@ -65,15 +66,35 @@ class FavoriteFragment : Fragment() {
             val deletedCity:City = favoriteCityList[position]
 
             deleteItem(position)
+            updateCityList(deletedCity,false)
+
+            Snackbar.make(recyclerView, "Deleted",Snackbar.LENGTH_LONG)
+                    .setAction("UNDO"){
+                        undoDelete(position,deletedCity)
+                        updateCityList(deletedCity,true)
+                    }
+                    .show()
 
         }
 
     })
 
+    private fun undoDelete(position: Int, deletedCity: City) {
+        favoriteCityList.add(position,deletedCity)
+        favoriteAdapter.notifyItemInserted(position)
+        favoriteAdapter.notifyItemRangeChanged(position,favoriteCityList.size)
+    }
+
+
     private fun deleteItem(position: Int) {
         favoriteCityList.removeAt(position)
         favoriteAdapter.notifyItemRemoved(position)
         favoriteAdapter.notifyItemRangeRemoved(position,favoriteCityList.size)
+    }
+    private fun updateCityList(deletedCity: City,isFav:Boolean) {
+        val cityList = VacationSpots.cityList!!
+        val position = cityList.indexOf(deletedCity)
+        cityList[position].isFavorite = isFav
     }
 
 }
