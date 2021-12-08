@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.glencconnnect.onatour.R
+import com.glencconnnect.onatour.favorite.FavoriteAdapter
 
 
 class CityListFragment : Fragment() {
@@ -24,7 +25,7 @@ class CityListFragment : Fragment() {
     private fun setUpRecycler(view: View?) {
         val context = requireContext()
 
-        val cityAdapter = CityAdapter(context, VacationSpots.cityList!!)
+        val cityAdapter = FavoriteAdapter(context, VacationSpots.cityList!!)
 
         val recyclerView = view?.findViewById<RecyclerView>(R.id.city_recycler_view)
         recyclerView?.adapter = cityAdapter
