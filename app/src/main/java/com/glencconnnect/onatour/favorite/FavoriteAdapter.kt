@@ -9,12 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.glencconnnect.onatour.R
 import com.glencconnnect.onatour.city.City
 
-class FavoriteAdapter(val context: Context, var cityList:ArrayList<City>): RecyclerView.Adapter<FavoriteAdapter.CityViewHolder>() {
+class FavoriteAdapter(val context: Context, var favCityList:ArrayList<City>): RecyclerView.Adapter<FavoriteAdapter.CityViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityViewHolder {
@@ -24,11 +23,11 @@ class FavoriteAdapter(val context: Context, var cityList:ArrayList<City>): Recyc
     }
 
     override fun onBindViewHolder(holder: CityViewHolder, position: Int) {
-        val city = cityList[position]
+        val city = favCityList[position]
         holder.setData(city,position)
     }
 
-    override fun getItemCount(): Int  = cityList.size
+    override fun getItemCount(): Int  = favCityList.size
 
     inner class CityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

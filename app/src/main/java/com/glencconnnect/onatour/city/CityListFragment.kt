@@ -25,7 +25,7 @@ class CityListFragment : Fragment() {
     private fun setUpRecycler(view: View?) {
         val context = requireContext()
 
-        val cityAdapter = FavoriteAdapter(context, VacationSpots.cityList!!)
+        val cityAdapter = CityAdapter(context, VacationSpots.cityList!!)
 
         val recyclerView = view?.findViewById<RecyclerView>(R.id.city_recycler_view)
         recyclerView?.adapter = cityAdapter

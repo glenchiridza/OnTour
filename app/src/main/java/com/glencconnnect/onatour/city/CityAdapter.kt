@@ -87,6 +87,8 @@ class CityAdapter(val context: Context, var cityList:ArrayList<City>): RecyclerV
             cityList.removeAt(currentPos)
             notifyItemRemoved(currentPos)
             notifyItemRangeChanged(currentPos,cityList.size)
+
+            VacationSpots.favoriteCityList.remove(currentCity!!)
         }
     }
 
