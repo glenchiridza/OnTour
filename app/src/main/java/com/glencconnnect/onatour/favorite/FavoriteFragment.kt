@@ -5,14 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.glencconnnect.onatour.R
 import com.glencconnnect.onatour.city.City
 import com.glencconnnect.onatour.city.VacationSpots
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class FavoriteFragment : Fragment() {
+
+    private lateinit var favoriteCityList : ArrayList<City>
+    private lateinit var favoriteAdapter: FavoriteAdapter
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -23,9 +30,10 @@ class FavoriteFragment : Fragment() {
     private fun setUpRecycler(view: View?) {
         val context = requireContext()
 
-        val favAdapter = FavoriteAdapter(context, VacationSpots.favoriteCityList!! as ArrayList<City>)
+        favoriteCityList = VacationSpots.favoriteCityList as ArrayList<City>
+        val favAdapter = FavoriteAdapter(context, favoriteCityList)
 
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.fav_recycler_view)
+        recyclerView = view?.findViewById(R.id.fav_recycler_view)!!
         recyclerView?.adapter = favAdapter
         recyclerView?.setHasFixedSize(true)
 
@@ -33,4 +41,26 @@ class FavoriteFragment : Fragment() {
         layoutManager.orientation = RecyclerView.VERTICAL
         recyclerView?.layoutManager = layoutManager
     }
+
+    private val itemTouchHelper = ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN ,0){
+        override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, targetViewHolder: RecyclerView.ViewHolder): Boolean {
+
+            //item dragged
+            val fromPosition = viewHolder.adapterPosition
+            val toPosition = viewHolder.adapterPosition
+
+            Collections.swap(favoriteCityList, fromPosition,toPosition)
+
+            recyclerView.adapter?.notifyItemMoved(fromPosition,toPosition)
+
+            return false
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            ///item swiped
+        }
+
+    })
+
 }
